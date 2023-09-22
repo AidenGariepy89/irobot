@@ -8,6 +8,8 @@ class Robo:
     STATE_HOLDERS = [
         "LEFT_BUMPER",
         "RIGHT_BUMPER",
+        "TOP_LEFT_TOUCH",
+        "BOTTOM_LEFT_TOUCH",
     ]
 
     shape_sides: int = 0
@@ -19,11 +21,17 @@ class Robo:
 
     state_lb = None
     state_rb = None
+    state_tlt = None
+    state_blt = None
 
     r: Root = None
 
     def __init__(self, r: Root):
         self.r = r
+
+    def set_defaults(self):
+        self.shape_sides = 0
+        self.shape_sidelength = 0
 
     async def set_color(self, color: Color):
         await self.r.set_lights_rgb(color.r, color.g, color.b)
@@ -33,6 +41,10 @@ class Robo:
             self.state_lb = new_state
         elif state_holder == self.STATE_HOLDERS[1]:
             self.state_rb = new_state
+        elif state_holder == self.STATE_HOLDERS[2]:
+            self.state_tlt = new_state
+        elif state_holder == self.STATE_HOLDERS[3]:
+            self.state_blt = new_state
 
     async def draw_regular_shape(self):
         """Draws the final shape

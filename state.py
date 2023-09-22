@@ -46,3 +46,28 @@ async def start_shape_draw(robo: Robo):
     robo.currently_running = False
 
     await robo.play_song(music.end_song)
+
+
+async def reset(robo: Robo):
+    await robo.r.play_note(Note.E5, 0.1)
+    robo.set_defaults()
+    await robo.set_color(color.RED)
+    await robo.set_state("LEFT_BUMPER", set_sides)
+    await robo.set_state("RIGHT_BUMPER", shape_state_setter)
+
+
+async def console(robo: Robo):
+    await robo.r.play_note(Note.G5_SHARP, 0.1)
+    user_input = input("Shape sides: ")
+    if user_input == 'q':
+        return
+    robo.shape_sides = int(user_input)
+    user_input = input("Shape side length (cm): ")
+    if user_input == 'q':
+        return
+    robo.shape_sidelength = int(user_input) / robo.base_speed
+    await robo.set_state("LEFT_BUMPER", start_shape_draw)
+    await robo.set_color(color.GREEN)
+    await robo.state_lb(robo)
+    await robo.set_color(color.RED)
+    robo.set_defaults()
