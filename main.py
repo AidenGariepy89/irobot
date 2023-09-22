@@ -15,24 +15,32 @@ robo = None
 @event(robot.when_bumped, [True, False])
 async def left_bumped(robot: Robot):
     global robo
+    if robo.currently_running:
+        return
     await robo.state_lb(robo)
 
 
 @event(robot.when_bumped, [False, True])
 async def right_bumped(robot: Robot):
     global robo
+    if robo.currently_running:
+        return
     await robo.state_rb(robo)
 
 
 @event(robot.when_touched, [True, False, False, False])
 async def top_left_touched(robot: Robot):
     global robo
+    if robo.currently_running:
+        return
     await robo.state_tlt(robo)
 
 
 @event(robot.when_touched, [False, False, True, False])
 async def bottom_left_touched(robot: Robot):
     global robo
+    if robo.currently_running:
+        return
     await robo.state_blt(robo)
 
 
