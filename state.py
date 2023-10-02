@@ -43,6 +43,7 @@ async def start_shape_draw(robo: Robo):
     robo.shape_sides = 0
     robo.shape_sidelength = 0
     await robo.set_state("LEFT_BUMPER", set_sides)
+    await robo.set_color(color.RED)
     robo.currently_running = False
 
     await robo.play_song(music.end_song)
